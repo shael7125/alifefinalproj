@@ -1,19 +1,15 @@
 ## Overview
 
-This repository provides a physical simulation platform for studying automatic design of robots or [virtual creatures](https://www.nature.com/articles/s42256-019-0102-8). It is based largely on the paper, [Evolution and learning in differentiable robots](https://sites.google.com/view/eldir). By abstracting away the physical simulation and control optimization details, this codebase makes it possible to quickly iterate on algorithms for morphological design.
+This repository modifies a simulator that randomly generates robots and allows the user to train and visulaize their fitness. The simulator is modified as follows:
 
-## Installation
+1) Change fitness measure to instead evaluate how closely a robot positions its own center of mass to a target. The robot is rewarded for rapidly closing this distance. This is meant to simulate an immune cell's response to the presence of an antigen, where rapid movement is key to protect the body from infection. Robots are trained to move faster towards the antigen by measuring fitness as the negative of the distance between the robot's COM and the antigen.
 
-1. Install [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/main) if you do not already have it. 
-2. Create a new environment: `conda create --name alife-sim` (you can replace "alife-sim" with another name as you like).
-3. Activate the environment: `conda activate alife-sim`.
-4. Install Python: `conda install python=3.12`
-5. Install Taichi: `pip install taichi==1.7.3`
-6. Install other packages: `pip install tqdm scipy pyaml flask ipykernel matplotlib`
+2) Evolve a given robot using a parallel hill climber method. The original (parent) robot's fitness is evaluated. The parent is mutated to create a child. The child's fitness is then evaluated. These fitnesses are compared, and the robot with the higher fitness is kept for the next generation. This is repeated over 10 generations to iteratively "climb the hill."
 
-## Usage
+Four situations were explored and documented via video.
+1) no evolution, no learning: robot_0
+2) train robot_0 to create robot_1: no evolution, learned
+3) evolve robot_0 to create robot_2: evolution, no learning
+4) train robot_2 to create robot_3: evolution and learning
 
-1. Review the code in `run.py`. It shows an example of how to interface with the simulator.
-2. Next review `config.yaml`. This includes a number of parameters, only a small number of which you should consider modifying. 
-3. Review `robot.py`. This code illustrates how random robot designs can be sampled and explains the key constraints to keep in mind when representing robots for the simulator. You can also visualize designs in `visualize_robots.ipynb`. 
-4. Finally, try to run the code: `python run.py`. This will generate some results files that you can visualize with `plot_fitness.ipynb` and `visualizer.py`. 
+The videos of the performance of these robots can be found in the videos folder. Interestingly, 10 generations of evolution seeemed to make the robot slower! This is most likely because my fitness algorithm is optimizing for the wrong function. Future development for this project would include workshopping this fitness algorithm to dynamically check where the target is, as this would perhaps allow the generation of robots that were able to respond to changing antigen/target location.
