@@ -12,4 +12,4 @@ Four situations were explored and documented via video.
 3) evolve robot_0 to create robot_2: evolution, no learning
 4) train robot_2 to create robot_3: evolution and learning
 
-The videos of the performance of these robots can be found in the videos folder. Interestingly, 10 generations of evolution seeemed to make the robot slower! This is most likely because my fitness algorithm is optimizing for the wrong function. Future development for this project would include workshopping this fitness algorithm to dynamically check where the target is, as this would perhaps allow the generation of robots that were able to respond to changing antigen/target location.
+The videos of the performance of these robots can be explored through visualizer.py. Interestingly, 10 generations of evolution seeemed to make the robot slower! This is most likely because my fitness algorithm is optimizing for the wrong function. Future development for this project would include workshopping this fitness algorithm to dynamically check where the target is, as this would perhaps allow the generation of robots that were able to respond to changing antigen/target location.
